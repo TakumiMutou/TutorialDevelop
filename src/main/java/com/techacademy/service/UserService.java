@@ -1,9 +1,10 @@
 package com.techacademy.service;
 
 import java.util.List;
+import java.util.Set;//追加
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional; //追加
+import org.springframework.transaction.annotation.Transactional;
 
 import com.techacademy.entity.User;
 import com.techacademy.repository.UserRepository;
@@ -21,6 +22,7 @@ public class UserService {
         //リポジトリのfindAllメソッドを呼び出す
         return userRepository.findAll();
     }
+
     /** Userを一件検索して返す*/
     public User getUser(Integer id) {
         return userRepository.findById(id).get();
@@ -31,4 +33,14 @@ public class UserService {
     public User saveUser(User user) {
         return userRepository.save(user);
     }
+
+    // ----- 追加:ここから -----
+    /** Userの削除を行う*/
+    @Transactional
+    public void deleteUser(Set<Integer> idck) {
+        for(Integer id : idck) {
+            userRepository.deleteById(id);
+        }
+    }
+    // ----- 追加:ここまで -----
 }
